@@ -3,11 +3,13 @@ Title: Tools for CRAN-like Repositories
 Version: 0.0.0.9000
 Author: Gábor Csárdi
 Maintainer: Gábor Csárdi <csardi.gabor@gmail.com>
-Description: A set of functions to manage CRAN-like repositories efficiently.
-License: GPL-2
+Description: A set of functions to manage CRAN-like repositories
+    efficiently.
+License: GPL (>= 2)
 LazyData: true
 URL: https://github.com/r-hub/cranlike
 BugReports: https://github.com/r-hub/cranlike/issues
 RoxygenNote: 5.0.1.9000
 Suggests: 
     testthat
+Encoding: UTF-8
