@@ -34,8 +34,19 @@ create_db <- function(dir, db_file, fields, ...) {
   pkgs <- adjust_package_fields(pkgs, fields)
 
   with_db(db_file, {
-    dbWriteTable(db, "packages", pkgs, overwrite = TRUE)
+    db_create_text_table(db, "packages", fields, key = "MD5sum")
+    dbWriteTable(db, "packages", pkgs, append = TRUE)
   })
+}
+
+db_create_text_table <- function(db, name, columns, key) {
+  sql <- paste0(
+    "CREATE TABLE ", name, "(\n",
+    paste0('  "', columns, '" ', "TEXT", collapse = ",\n"),
+    if (!is.null(key)) paste0(',\n  PRIMARY KEY ("', key, '")\n'),
+    ");"
+  )
+  dbGetQuery(db, sql)
 }
 
 adjust_package_fields <- function(pkgs, fields) {
