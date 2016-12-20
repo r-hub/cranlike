@@ -43,11 +43,11 @@ write_packages_files <- function(dir, db_file) {
   close (pkggz)
 
   ## PACKAGES.rds
-  saveRDS(as.matrix(df), pkgs_new["rds"])
+  saveRDS(as.matrix(df), file.path(dir, pkgs_new["rds"]))
 
   ## Move them in place
   ## TODO: should we create .bak files, and roll back on error?
-  file.rename(pkgs_new, pkgs)
+  file.rename(file.path(dir, pkgs_new), file.path(dir, pkgs))
 
   ## Number of packages added
   invisible(nrow(df))
