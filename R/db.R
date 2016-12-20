@@ -24,6 +24,12 @@ db_all_packages <- function(db_file) {
   })
 }
 
+db_get_fields <- function(db_file) {
+  with_db(db_file, {
+    names(dbGetQuery(db, "SELECT * FROM PACKAGES LIMIT 1"))
+  })
+}
+
 #' @importFrom DBI dbWriteTable
 
 create_db <- function(dir, db_file, fields, ...) {

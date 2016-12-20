@@ -59,4 +59,8 @@ files quickly. It this database does not exist, then it will be created
 based on the existing PACKAGES* files. If no PACKAGES* files exist,
 either, then these will be created via `
 }
+\seealso{
+Other PACKAGES manipulation: \code{\link{add_PACKAGES}},
+  \code{\link{remove_PACKAGES}}
+}
 

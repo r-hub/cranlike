@@ -12,3 +12,15 @@ pkgname_from_filename <- function(files) {
 `%:::%` <- function(pkg, fun) {
   getFromNamespace(fun, asNamespace(pkg))
 }
+
+check_existing_files <- function(files) {
+
+  miss <- ! file.exists(files)
+
+  if (sum(miss) == 1) {
+    stop("File does not exist: ", files[miss])
+
+  } else if (sum(miss) > 1) {
+    stop("Files do not exist: ", paste(files[miss], collapse = ", "))
+  }
+}
