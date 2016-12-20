@@ -50,7 +50,7 @@ update_PACKAGES <- function(
   }
   type <- match.arg(type)
 
-  db_file <- file.path(dir, "PACKAGES.db")
+  db_file <- get_db_file(dir)
 
   ## Create DB if needed
   if (!file.exists(db_file)) {

@@ -3,6 +3,10 @@
 
 globalVariables("db")
 
+get_db_file <- function(dir) {
+  file.path(dir, "PACKAGES.db")
+}
+
 #' @importFrom DBI dbConnect dbDisconnect
 #' @importFrom RSQLite SQLite
 
