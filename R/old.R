@@ -5,7 +5,9 @@ list_package_files <- function(dir, type) {
     "source" = "_.*\\.tar\\..*$",
     "mac.binary" = "_.*\\.tgz$",
     "win.binary" = "_.*\\.zip$")
-  list.files(dir, pattern = package_pattern, full.names = TRUE)
+  normalizePath(
+    list.files(dir, pattern = package_pattern, full.names = TRUE)
+  )
 }
 
 write_packages_files <- function(dir, db_file) {
