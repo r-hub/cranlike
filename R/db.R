@@ -32,16 +32,9 @@ db_get_fields <- function(db_file) {
 
 #' @importFrom DBI dbWriteTable
 
-create_db <- function(dir, db_file, fields, ...) {
-
-  pkgs <- as.data.frame(get_old_packages(dir, ...))
-  if (is.null(pkgs)) stop("Cannot use or create PACKAGES files")
-
-  pkgs <- adjust_package_fields(pkgs, fields)
-
+create_db <- function(db_file, fields) {
   with_db(db_file, {
     db_create_text_table(db, "packages", fields, key = "MD5sum")
-    dbWriteTable(db, "packages", pkgs, append = TRUE)
   })
 }
 

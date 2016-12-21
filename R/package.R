@@ -54,10 +54,7 @@ update_PACKAGES <- function(
   db_file <- get_db_file(dir)
 
   ## Create DB if needed
-  if (!file.exists(db_file)) {
-    create_db(dir, db_file, fields = fields, type = type,
-              addFiles = addFiles)
-  }
+  if (!file.exists(db_file)) create_db(db_file, fields = fields)
 
   ## Update DB
   update_db(dir, db_file, fields, type, addFiles)

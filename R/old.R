@@ -1,23 +1,4 @@
 
-#' @importFrom tools write_PACKAGES
-
-get_old_packages <- function(dir, ...) {
-  ## If there is a PACKAGES file, create the DB from that,
-  ## Otherwise create a PACKAGES file first
-  if (file.exists(rds <- file.path(dir, "PACKAGES.rds"))) {
-    readRDS(rds)
-
-  } else if (file.exists(gz <- file.path(dir, "PACKAGES.gz"))) {
-    read.dcf(gzfile(gz))
-
-  } else if (file.exists(plain <- file.path(dir, "PACKAGES"))) {
-    read.dcf(plain)
-
-  } else {
-    write_PACKAGES(dir, ...)
-    read.dcf(plain)
-  }
-}
 list_package_files <- function(dir, type) {
   package_pattern <- switch(
     type,
