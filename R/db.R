@@ -7,6 +7,17 @@ get_db_file <- function(dir) {
   file.path(dir, "PACKAGES.db")
 }
 
+get_fields <- function(fields) {
+  if (is.null(fields)) {
+    fields <- unique(c(
+      ("tools" %:::% ".get_standard_repository_db_fields")(),
+      "MD5sum"
+    ))
+  }
+
+  unique(c(fields, "File"))
+}
+
 #' @importFrom DBI dbConnect dbDisconnect
 #' @importFrom RSQLite SQLite
 
@@ -70,7 +81,7 @@ adjust_package_fields <- function(pkgs, fields) {
 #' @importFrom tools md5sum
 #' @importFrom DBI sqlInterpolate
 
-update_db <- function(dir, db_file, fields, type, ...) {
+update_db <- function(dir, db_file, fields, type) {
 
   ## Current packages
   files <- list_package_files(dir, type)

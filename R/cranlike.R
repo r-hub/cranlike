@@ -33,17 +33,10 @@ NULL
 #' @export
 
 update_PACKAGES <- function(
-  dir = ".", fields = NULL, type = c("source", "mac.binary", "win.binary"),
-  addFiles = TRUE) {
+  dir = ".", fields = NULL,
+  type = c("source", "mac.binary", "win.binary")) {
 
-  if (is.null(fields)) {
-    fields <- unique(c(
-      ("tools" %:::% ".get_standard_repository_db_fields")(),
-      "MD5sum"
-    ))
-  }
-
-  fields <- unique(c(fields, "File"))
+  fields <- get_fields(fields)
 
   ## This is bad, but tools does it, so we just follow
   if (missing(type) && .Platform$OS.type == "windows") {
@@ -57,7 +50,7 @@ update_PACKAGES <- function(
   if (!file.exists(db_file)) create_db(db_file, fields = fields)
 
   ## Update DB
-  update_db(dir, db_file, fields, type, addFiles)
+  update_db(dir, db_file, fields, type)
 
   ## Write out new PACKAGES* files
   write_packages_files(dir, db_file)
