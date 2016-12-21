@@ -58,11 +58,10 @@ adjust_package_fields <- function(pkgs, fields) {
       ),
       names = add
     )
-    pkgs <- as.data.frame(c(as.list(pkgs), newcols))
-  }
-
-  if (length(remove <- setdiff(colnames(pkgs), fields))) {
-
+    pkgs <- as.data.frame(
+      c(as.list(pkgs), newcols),
+      stringsAsFactors = FALSE
+    )
   }
 
   pkgs[, fields]
