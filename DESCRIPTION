@@ -19,5 +19,7 @@ Imports:
     utils
 Suggests: 
     covr,
-    testthat
+    mockery,
+    testthat,
+    withr
 Encoding: UTF-8

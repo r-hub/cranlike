@@ -61,3 +61,8 @@ test_that("check_existing_files", {
     "Files do not exist"
   )
 })
+
+test_that("get_pkg_type", {
+  mockery::stub(get_pkg_type, "get_platform", "windows")
+  expect_equal(get_pkg_type(), "win.binary")
+})

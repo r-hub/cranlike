@@ -38,11 +38,7 @@ update_PACKAGES <- function(
 
   fields <- get_fields(fields)
 
-  ## This is bad, but tools does it, so we just follow
-  if (missing(type) && .Platform$OS.type == "windows") {
-    type <- "win.binary"
-  }
-  type <- match.arg(type)
+  type <- if (missing(type)) get_pkg_type() else get_pkg_type(type)
 
   db_file <- get_db_file(dir)
 
