@@ -55,16 +55,19 @@ update_PACKAGES <- function(
 
 #' Add R packages to the package database
 #'
-#' The files must exist in the directory.
+#' The files must exist in the directory. If the package database does
+#' not exist, then it will be created.
 #'
 #' @param files Files to add, only the file names, without the path.
 #'   You can use [base::basename()] to chop off the path.
 #' @param dir Package directory.
+#' @param fields Fields to use in the database if the database is
+#'   created.
 #'
 #' @family PACKAGES manipulation
 #' @export
 
-add_PACKAGES <- function(files, dir = ".") {
+add_PACKAGES <- function(files, dir = ".", fields = NULL) {
 
   "!DEBUG Adding `length(files)` packages"
 
@@ -74,7 +77,9 @@ add_PACKAGES <- function(files, dir = ".") {
   md5s <- md5sum(full_files)
 
   db_file <- get_db_file(dir)
-  fields <- db_get_fields(db_file)
+  fields <- get_fields(fields)
+  if (!file.exists(db_file)) create_db(db_file, fields = fields)
+
   pkgs <- parse_package_files(full_files, md5s, fields)
   with_db(db_file, {
     insert_packages(db, pkgs)
