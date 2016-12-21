@@ -1,5 +1,7 @@
 
-make_tmp_pkg <- function(dir, name) {
+make_tmp_pkg <- function(dir, name, type = c("source", "win.binary")) {
+
+  type <- match.arg(type)
 
   ## Package root directory
   dir.create(tmp <- tempfile())
@@ -26,12 +28,20 @@ make_tmp_pkg <- function(dir, name) {
 
   ## tar it up, we need to create this file, otherwise normalizePAth
   ## does not work :/
-  pkgfile <- file.path(dir, paste0(name, "_1.0.0.tar.gz"))
+  pkgfile <- file.path(
+    dir,
+    paste0(name, if (type == "source") "_1.0.0.tar.gz" else "_1.0.0.zip")
+  )
   cat("", file = pkgfile)
   pkgfile <- normalizePath(pkgfile)
 
   withr::with_dir(tmp, {
-    utils::tar(pkgfile, name, compression = "gzip")
+    unlink(pkgfile)
+    if (type == "source") {
+      utils::tar(pkgfile, name, compression = "gzip")
+    } else {
+      utils::zip(pkgfile, name, flags = "-r9Xq")
+    }
   })
 
   pkgfile

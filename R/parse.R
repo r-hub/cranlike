@@ -1,6 +1,5 @@
 
 #' @importFrom desc description
-#' @importFrom utils untar
 
 parse_package_files <- function(files, md5s, fields) {
 
@@ -11,9 +10,8 @@ parse_package_files <- function(files, md5s, fields) {
   ## Extract and parse DESCRIPTION
   pkgs <- vapply(seq_along(files), FUN.VALUE = fields, function(i) {
     file <- files[i]
-    pkg <- pkgname_from_filename(file)
-    untar(file, files = paste0(pkg, "/DESCRIPTION"), exdir = tmp)
-    desc <- description$new(file.path(tmp, pkg, "DESCRIPTION"))
+    desc_file <- get_desc_file(files[i], exdir = tmp)
+    desc <- description$new(desc_file)
     desc$get(fields)
   })
 
@@ -31,4 +29,25 @@ parse_package_files <- function(files, md5s, fields) {
                        NA_character_)
 
   df
+}
+
+get_desc_file <- function(file, exdir) {
+  pkg <- pkgname_from_filename(file)
+  uncompress <- choose_uncompress_function(file)
+  uncompress(file, files = paste0(pkg, "/DESCRIPTION"), exdir = exdir)
+  file.path(exdir, pkg, "DESCRIPTION")
+}
+
+#' @importFrom utils untar unzip
+
+choose_uncompress_function <- function(file) {
+  if (grepl("_.*\\.zip$", file)) {
+    unzip
+
+  } else if (grepl("_.*\\.tar\\..*$", file) || grepl("_.*\\.tgz$", file)) {
+    untar
+
+  } else {
+    stop("Don't know how to handle file: ", file)
+  }
 }

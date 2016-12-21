@@ -20,6 +20,25 @@ test_that("update", {
   expect_equal(tab$File, basename(c(foo, foo2, foo3)))
 })
 
+test_that("update, zip files", {
+  dir.create(dir <- tempfile())
+  on.exit(unlink(dir, recursive = TRUE), add = TRUE)
+
+  foo2 <- make_tmp_pkg(dir, "foobar2", type = "win.binary")
+  foo  <- make_tmp_pkg(dir, "foobar", type = "win.binary")
+  foo3 <- make_tmp_pkg(dir, "foobar3", type = "win.binary")
+
+  db_file <- get_db_file(dir)
+  fields <- get_fields(NULL)
+  create_db(db_file, fields)
+  update_PACKAGES(dir, type = "win.binary")
+
+  tab <- db_all_packages(db_file)
+  expect_equal(names(tab), fields)
+  expect_equal(tab$Package, c("foobar", "foobar2", "foobar3"))
+  expect_equal(tab$File, basename(c(foo, foo2, foo3)))
+})
+
 context("add")
 
 test_that("add", {
