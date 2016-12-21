@@ -10,7 +10,7 @@ LazyData: true
 URL: https://github.com/r-hub/cranlike
 BugReports: https://github.com/r-hub/cranlike/issues
 RoxygenNote: 5.0.1.9000
-Imports:
+Imports: 
     DBI,
     debugme,
     desc,
@@ -18,5 +18,6 @@ Imports:
     tools,
     utils
 Suggests: 
+    covr,
     testthat
 Encoding: UTF-8

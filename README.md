@@ -7,7 +7,7 @@
 [![Windows Build status](https://ci.appveyor.com/api/projects/status/github/r-hub/cranlike?svg=true)](https://ci.appveyor.com/project/gaborcsardi/cranlike)
 [![](http://www.r-pkg.org/badges/version/cranlike)](http://www.r-pkg.org/pkg/cranlike)
 [![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/cranlike)](http://www.r-pkg.org/pkg/cranlike)
-
+[![Coverage Status](https://img.shields.io/codecov/c/github/r-hub/cranlike/master.svg)](https://codecov.io/github/r-hub/cranlike?branch=master)
 
 A set of functions to manage CRAN-like repositories efficiently.
 
