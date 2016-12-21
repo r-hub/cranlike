@@ -44,6 +44,7 @@ db_get_fields <- function(db_file) {
 #' @importFrom DBI dbWriteTable
 
 create_db <- function(db_file, fields) {
+  "!DEBUG Creating DB in `basename(db_file)`"
   with_db(db_file, {
     db_create_text_table(db, "packages", fields, key = "MD5sum")
   })
@@ -83,6 +84,8 @@ adjust_package_fields <- function(pkgs, fields) {
 
 update_db <- function(dir, db_file, fields, type) {
 
+  "!DEBUG Updating DB in `basename(db_file)`"
+
   ## Current packages
   files <- list_package_files(dir, type)
   dir_md5 <- md5sum(files)
@@ -100,6 +103,7 @@ update_db <- function(dir, db_file, fields, type) {
       if (length(removed <- setdiff(db_md5, dir_md5)) > 0) {
         sql <- "DELETE FROM packages WHERE MD5sum = ?md5sum"
         for (rem in removed) {
+          "!DEBUG Removing `rem`"
           dbGetQuery(db, sqlInterpolate(db, sql, md5sum = rem))
         }
       }

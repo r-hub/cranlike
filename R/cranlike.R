@@ -36,6 +36,7 @@ update_PACKAGES <- function(
   dir = ".", fields = NULL,
   type = c("source", "mac.binary", "win.binary")) {
 
+  "!DEBUG Updating DB and PACKAGES* from directory content"
   fields <- get_fields(fields)
 
   type <- match.arg(type)
@@ -64,6 +65,8 @@ update_PACKAGES <- function(
 #' @export
 
 add_PACKAGES <- function(files, dir = ".") {
+
+  "!DEBUG Adding `length(files)` packages"
 
   full_files <- file.path(dir, files)
   check_existing_files(full_files)
@@ -95,6 +98,8 @@ add_PACKAGES <- function(files, dir = ".") {
 
 remove_PACKAGES <- function(files, dir = ".") {
 
+  "!DEBUG Removing `length(files)` packages"
+
   full_files <- file.path(dir, files)
   check_existing_files(full_files)
 
@@ -104,6 +109,7 @@ remove_PACKAGES <- function(files, dir = ".") {
   with_db(db_file, {
     sql <- "DELETE FROM packages WHERE MD5sum = ?md5"
     for (md5 in md5s) {
+      "!DEBUG Removing `md5`"
       dbGetQuery(db, sqlInterpolate(db, sql, md5 = md5))
     }
   })

@@ -11,6 +11,8 @@ list_package_files <- function(dir, type) {
 }
 
 write_packages_files <- function(dir, db_file) {
+
+  "!DEBUG Writing PACKAGES for `basename(db_file)`"
   df <- db_all_packages(db_file)
   txt <- get_packages_txt(df)
 

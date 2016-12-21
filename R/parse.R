@@ -10,6 +10,7 @@ parse_package_files <- function(files, md5s, fields) {
   ## Extract and parse DESCRIPTION
   pkgs <- vapply(seq_along(files), FUN.VALUE = fields, function(i) {
     file <- files[i]
+    "!DEBUG Parsing `basename(file)`"
     desc_file <- get_desc_file(files[i], exdir = tmp)
     desc <- description$new(desc_file)
     desc$get(fields)
