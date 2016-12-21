@@ -38,7 +38,7 @@ update_PACKAGES <- function(
 
   fields <- get_fields(fields)
 
-  type <- if (missing(type)) get_pkg_type() else get_pkg_type(type)
+  type <- match.arg(type)
 
   db_file <- get_db_file(dir)
 

@@ -24,18 +24,3 @@ check_existing_files <- function(files) {
     stop("Files do not exist: ", paste(files[miss], collapse = ", "))
   }
 }
-
-## This is bad, but tools does it, so we just follow
-
-get_pkg_type <- function(type = c("source", "mac.binary", "win.binary")) {
-  if (missing(type) && get_platform() == "windows") {
-    type <- "win.binary"
-  }
-  type <- match.arg(type)
-
-  type
-}
-
-get_platform <- function() {
-  .Platform$OS.type
-}
