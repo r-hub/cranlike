@@ -81,7 +81,11 @@ add_PACKAGES <- function(files, dir = ".", fields = NULL) {
   if (!file.exists(db_file)) create_db(db_file, fields = fields)
 
   pkgs <- parse_package_files(full_files, md5s, fields)
+  sql <- "DELETE FROM packages WHERE file = ?file"
   with_db(db_file, {
+    for (file in full_files) {
+      dbGetQuery(db, sqlInterpolate(db, sql, file = basename(file)))
+    }
     insert_packages(db, pkgs)
   })
 
