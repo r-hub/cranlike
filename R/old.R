@@ -41,6 +41,9 @@ write_packages_files <- function(dir, db_file) {
 #' @importFrom utils head
 
 get_packages_txt <- function(df) {
+  ## It is easiest to handle this separately
+  if (nrow(df) == 0) return("")
+
   mat <- t(as.matrix(cbind(df, "")))
   nms <- rep(c(paste0(colnames(df), ": "), ""), nrow(df))
   nms <- nms[!is.na(mat)]
