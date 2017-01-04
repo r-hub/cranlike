@@ -8,7 +8,7 @@ add_PACKAGES(files, dir = ".", fields = NULL)
 }
 \arguments{
 \item{files}{Files to add, only the file names, without the path.
-You can use [base::basename()] to chop off the path.}
+You can use \code{\link[base:basename]{base::basename()}} to chop off the path.}
 
 \item{dir}{Package directory.}
 
@@ -23,4 +23,3 @@ not exist, then it will be created.
 Other PACKAGES manipulation: \code{\link{remove_PACKAGES}},
   \code{\link{update_PACKAGES}}
 }
-

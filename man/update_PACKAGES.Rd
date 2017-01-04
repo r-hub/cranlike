@@ -35,23 +35,25 @@ update_PACKAGES(dir = ".", fields = NULL, type = c("source", "mac.binary",
     \code{"win.binary"} on Windows and to \code{"source"} otherwise.
   }
 
-\item{...}{Other arguments are passed to [tools::write_PACKAGES()].
-Note that not all invokations will call [tools::write_PACKAGES()],
+\item{...}{Other arguments are passed to \code{\link[tools:write_PACKAGES]{tools::write_PACKAGES()}}.
+Note that not all invokations will call \code{\link[tools:write_PACKAGES]{tools::write_PACKAGES()}},
 so these arguments might not be used at all.}
 }
 \description{
-This function is similar to [tools::write_PACKAGES()], with some
+This function is similar to \code{\link[tools:write_PACKAGES]{tools::write_PACKAGES()}}, with some
 differences:
-* It always uses the `MD5sum` field.
-* It defaults to `addFiles = TRUE`, to allow following the packag
-  files better.
-* It does not support the `verbose`, `unpacked`, and `subdirs`
-  arguments currently.
-* It uses a database to speed up the indexing process, and only
-  reindexes files that have added, removed or updated.
+\itemize{
+\item It always uses the \code{MD5sum} field.
+\item It defaults to \code{addFiles = TRUE}, to allow following the packag
+files better.
+\item It does not support the \code{verbose}, \code{unpacked}, and \code{subdirs}
+arguments currently.
+\item It uses a database to speed up the indexing process, and only
+reindexes files that have added, removed or updated.
+}
 }
 \details{
-`update_PACKAGES` uses a SQLite database to aid updating PACKAGES*
+\code{update_PACKAGES} uses a SQLite database to aid updating PACKAGES*
 files quickly. It this database does not exist, then it will be created
 based on the existing PACKAGES* files. If no PACKAGES* files exist,
 either, then these will be created via `
@@ -60,4 +62,3 @@ either, then these will be created via `
 Other PACKAGES manipulation: \code{\link{add_PACKAGES}},
   \code{\link{remove_PACKAGES}}
 }
-

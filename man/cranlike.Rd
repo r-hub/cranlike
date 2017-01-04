@@ -8,4 +8,3 @@
 \description{
 A set of functions to manage CRAN-like repositories efficiently.
 }
-

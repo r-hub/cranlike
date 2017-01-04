@@ -1,4 +1,9 @@
 
+#' List all packages and versions in a CRAN-like repository
+#'
+#' @param dir Path to the repository.
+#' @return Data frame with two columns: `Package`, `Version`.
+#'
 #' @export
 
 package_versions <- function(dir = ".") {

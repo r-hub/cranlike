@@ -9,6 +9,7 @@ License: GPL (>= 2)
 LazyData: true
 URL: https://github.com/r-hub/cranlike
 BugReports: https://github.com/r-hub/cranlike/issues
+Roxygen: list(markdown = TRUE)
 RoxygenNote: 5.0.1.9000
 Imports: 
     DBI,
