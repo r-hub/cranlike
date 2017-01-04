@@ -24,3 +24,7 @@ check_existing_files <- function(files) {
     stop("Files do not exist: ", paste(files[miss], collapse = ", "))
   }
 }
+
+drop_nulls <- function(l) {
+  l[ ! vapply(l, is.null, TRUE) ]
+}

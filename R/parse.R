@@ -7,21 +7,40 @@ parse_package_files <- function(files, md5s, fields) {
   dir.create(tmp <- tempfile())
   on.exit(unlink(tmp, recursive = TRUE), add = TRUE)
 
-  ## Extract and parse DESCRIPTION
-  pkgs <- vapply(seq_along(files), FUN.VALUE = fields, function(i) {
-    file <- files[i]
+  ## Extract and parse DESCRIPTION. If there is a warning, then
+  ## this is probably because uncompressing the file has failed.
+  ## If there is an error, then we could not extract DESCRIPTION,
+  ## but even in this case there will be a warning as well...
+  pkgs <- lapply(files, function(file) {
     "!DEBUG Parsing `basename(file)`"
-    desc_file <- get_desc_file(files[i], exdir = tmp)
-    desc <- description$new(desc_file)
-    desc$get(fields)
+    desc_file <- get_desc_file(file, exdir = tmp)
+    if (is.null(desc_file)) return(NULL)
+    desc <- tryCatch(
+      desc <- description$new(desc_file),
+      error = function(e) {
+        warning("Invalid DESCRIPTION file")
+        NULL
+      }
+    )
+    if (is.null(desc)) return(NULL)
+    row <- desc$get(fields)
+    if (is.na(row["Package"])) warning("No package name in ", sQuote(file))
+    if (is.na(row["Version"])) warning("No version number in ", sQuote(file))
+    row
   })
+  valid <- ! vapply(pkgs, is.null, TRUE)
+
+  ## Make it into a DF
+  pkgs <- drop_nulls(pkgs)
+  pkgs <- vapply(pkgs, c, FUN.VALUE = fields)
+  df <- as.data.frame(t(pkgs))
+  names(df) <- fields
 
   ## Stick in MD5
-  df <- as.data.frame(t(pkgs))
-  df$MD5sum <- md5s
+  df$MD5sum <- md5s[valid]
 
   ## Add file names
-  df$File <- basename(files)
+  df$File <- basename(files[valid])
 
   ## Standardize licenses, or NA, like in tools
   license_info <- analyze_licenses(df$License)
@@ -35,8 +54,28 @@ parse_package_files <- function(files, md5s, fields) {
 get_desc_file <- function(file, exdir) {
   pkg <- pkgname_from_filename(file)
   uncompress <- choose_uncompress_function(file)
-  uncompress(file, files = paste0(pkg, "/DESCRIPTION"), exdir = exdir)
-  file.path(exdir, pkg, "DESCRIPTION")
+  tryCatch(
+    {
+      uncompress(file, files = paste0(pkg, "/DESCRIPTION"), exdir = exdir)
+      file.path(exdir, pkg, "DESCRIPTION")
+    },
+    error = function(e) {
+      warning(
+        "Cannot extract valid DESCRIPTION, ", sQuote(file),
+        " will be ignored ",
+        conditionMessage(e)
+      )
+      NULL
+    },
+    warning = function(e) {
+      warning(
+        "Cannot extract valid DESCRIPTION, ", sQuote(file),
+        " will be ignored ",
+        conditionMessage(e)
+        )
+      NULL
+    }
+  )
 }
 
 #' @importFrom utils untar unzip
