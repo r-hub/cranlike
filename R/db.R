@@ -45,6 +45,7 @@ db_get_fields <- function(db_file) {
 
 create_db <- function(db_file, fields) {
   "!DEBUG Creating DB in `basename(db_file)`"
+  dir.create(dirname(db_file), showWarnings = FALSE, recursive = TRUE)
   with_db(db_file, {
     db_create_text_table(db, "packages", fields, key = "MD5sum")
   })
