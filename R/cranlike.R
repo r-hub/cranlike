@@ -7,6 +7,32 @@
 #' @name cranlike
 NULL
 
+#' Create an empty package database
+#'
+#' Create an empty package database if it does not exist.
+#' It also updates the PACKAGES* files from the new (empty) database.
+#'
+#' @inheritParams tools::write_PACKAGES
+#' @export
+
+create_empty_PACKAGES <- function(
+  dir = ".", fields = NULL,
+  type = c("source", "mac.binary", "win.binary")) {
+
+  "!DEBUG Creating empty package DB and PACKAGES* files"
+  fields <- get_fields(fields)
+
+  type <- match.arg(type)
+
+  db_file <- get_db_file(dir)
+
+  ## Create DB if needed
+  if (!file.exists(db_file)) create_db(db_file, fields = fields)
+
+  ## Write out new PACKAGES* files
+  write_packages_files(dir, db_file)
+}
+
 #' Create or update PACKAGES* files for a CRAN-like repository
 #'
 #' This function is similar to [tools::write_PACKAGES()], with some
@@ -24,7 +50,7 @@ NULL
 #' based on the existing PACKAGES* files. If no PACKAGES* files exist,
 #' either, then these will be created via `
 #'
-#' @inheritParams tools::write_PACKAGES
+#' @inheritParams create_empty_PACKAGES
 #' @param ... Other arguments are passed to [tools::write_PACKAGES()].
 #'   Note that not all invokations will call [tools::write_PACKAGES()],
 #'   so these arguments might not be used at all.
