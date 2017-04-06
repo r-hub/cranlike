@@ -10,7 +10,7 @@ package_versions(dir = ".")
 \item{dir}{Path to the repository.}
 }
 \value{
-Data frame with two columns: \code{Package}, \code{Version}.
+Data frame with three columns: \code{Package}, \code{Version}, \code{MD5sum}.
 }
 \description{
 List all packages and versions in a CRAN-like repository
