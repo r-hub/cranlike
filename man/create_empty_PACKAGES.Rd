@@ -4,8 +4,7 @@
 \alias{create_empty_PACKAGES}
 \title{Create an empty package database}
 \usage{
-create_empty_PACKAGES(dir = ".", fields = NULL, type = c("source",
-  "mac.binary", "win.binary"))
+create_empty_PACKAGES(dir = ".", fields = NULL)
 }
 \arguments{
 \item{dir}{Character vector describing the location of the repository
@@ -26,13 +25,6 @@ create_empty_PACKAGES(dir = ".", fields = NULL, type = c("source",
     the file name in field \code{"File"} if \code{addFile = TRUE}
     and the path to the subdirectory in field \code{"Path"} if subdirectories
     are used.
-  }
-
-\item{type}{
-    Type of packages: currently source \file{.tar.{gz,bz2,xz}} archives,
-    and macOS or Windows binary (\file{.tgz} or \file{.zip},
-    respectively) packages are supported.  Defaults to
-    \code{"win.binary"} on Windows and to \code{"source"} otherwise.
   }
 }
 \description{

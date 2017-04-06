@@ -34,10 +34,6 @@ update_PACKAGES(dir = ".", fields = NULL, type = c("source", "mac.binary",
     respectively) packages are supported.  Defaults to
     \code{"win.binary"} on Windows and to \code{"source"} otherwise.
   }
-
-\item{...}{Other arguments are passed to \code{\link[tools:write_PACKAGES]{tools::write_PACKAGES()}}.
-Note that not all invokations will call \code{\link[tools:write_PACKAGES]{tools::write_PACKAGES()}},
-so these arguments might not be used at all.}
 }
 \description{
 This function is similar to \code{\link[tools:write_PACKAGES]{tools::write_PACKAGES()}}, with some

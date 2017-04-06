@@ -15,14 +15,10 @@ NULL
 #' @inheritParams tools::write_PACKAGES
 #' @export
 
-create_empty_PACKAGES <- function(
-  dir = ".", fields = NULL,
-  type = c("source", "mac.binary", "win.binary")) {
+create_empty_PACKAGES <- function(dir = ".", fields = NULL) {
 
   "!DEBUG Creating empty package DB and PACKAGES* files"
   fields <- get_fields(fields)
-
-  type <- match.arg(type)
 
   db_file <- get_db_file(dir)
 
@@ -51,9 +47,7 @@ create_empty_PACKAGES <- function(
 #' either, then these will be created via `
 #'
 #' @inheritParams create_empty_PACKAGES
-#' @param ... Other arguments are passed to [tools::write_PACKAGES()].
-#'   Note that not all invokations will call [tools::write_PACKAGES()],
-#'   so these arguments might not be used at all.
+#' @inheritParams tools::write_PACKAGES
 #'
 #' @family PACKAGES manipulation
 #' @export
