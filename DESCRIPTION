@@ -23,4 +23,5 @@ Suggests:
     mockery,
     testthat,
     withr
+Remotes: r-pkgs/desc
 Encoding: UTF-8

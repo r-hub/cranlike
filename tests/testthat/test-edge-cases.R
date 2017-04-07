@@ -92,7 +92,7 @@ test_that("invalid DESCRIPTION", {
     tar(file.path(dir2, "pkg_1.0.0.tar.gz"), "pkg", compression = "gzip")
   )
 
-  expect_warning(update_PACKAGES(dir2), "Invalid DESCRIPTION file")
+  expect_warning(update_PACKAGES(dir2), "Cannot extract valid DESCRIPTION")
 
   db_file <- get_db_file(dir2)
   fields <- get_fields(NULL)

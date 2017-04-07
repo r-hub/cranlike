@@ -1,6 +1,4 @@
 
-#' @importFrom desc description
-
 parse_package_files <- function(files, md5s, fields) {
 
   ## We work in temp dir
@@ -13,15 +11,7 @@ parse_package_files <- function(files, md5s, fields) {
   ## but even in this case there will be a warning as well...
   pkgs <- lapply(files, function(file) {
     "!DEBUG Parsing `basename(file)`"
-    desc_file <- get_desc_file(file, exdir = tmp)
-    if (is.null(desc_file)) return(NULL)
-    desc <- tryCatch(
-      desc <- description$new(desc_file),
-      error = function(e) {
-        warning("Invalid DESCRIPTION file")
-        NULL
-      }
-    )
+    desc <- get_desc(file)
     if (is.null(desc)) return(NULL)
     row <- desc$get(fields)
     if (is.na(row["Package"])) warning("No package name in ", sQuote(file))
@@ -51,28 +41,17 @@ parse_package_files <- function(files, md5s, fields) {
   df
 }
 
-get_desc_file <- function(file, exdir) {
-  pkg <- pkgname_from_filename(file)
-  uncompress <- choose_uncompress_function(file)
+#' @importFrom desc description
+
+get_desc <- function(file) {
   tryCatch(
-    {
-      uncompress(file, files = paste0(pkg, "/DESCRIPTION"), exdir = exdir)
-      file.path(exdir, pkg, "DESCRIPTION")
-    },
+    description$new(file),
     error = function(e) {
       warning(
         "Cannot extract valid DESCRIPTION, ", sQuote(file),
         " will be ignored ",
         conditionMessage(e)
       )
-      NULL
-    },
-    warning = function(e) {
-      warning(
-        "Cannot extract valid DESCRIPTION, ", sQuote(file),
-        " will be ignored ",
-        conditionMessage(e)
-        )
       NULL
     }
   )
