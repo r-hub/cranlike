@@ -61,10 +61,10 @@ get_desc <- function(file) {
 
 choose_uncompress_function <- function(file) {
   if (grepl("_.*\\.zip$", file)) {
-    unzip
+    function(...) unzip(..., unzip = "internal")
 
   } else if (grepl("_.*\\.tar\\..*$", file) || grepl("_.*\\.tgz$", file)) {
-    untar
+    function(...) untar(..., tar = "internal")
 
   } else {
     stop("Don't know how to handle file: ", file)

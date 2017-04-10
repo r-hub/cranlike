@@ -38,7 +38,7 @@ make_tmp_pkg <- function(dir, name, type = c("source", "win.binary")) {
   withr::with_dir(tmp, {
     unlink(pkgfile)
     if (type == "source") {
-      utils::tar(pkgfile, name, compression = "gzip")
+      utils::tar(pkgfile, name, compression = "gzip", tar = "internal")
     } else {
       zip::zip(pkgfile, name)
     }

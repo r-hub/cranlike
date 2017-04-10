@@ -2,17 +2,17 @@
 context("parse")
 
 test_that("choose_uncompress_function", {
-  expect_equal(
-    choose_uncompress_function("foo_1.0.0.tar.gz"),
-    utils::untar
+  expect_output(
+    print(choose_uncompress_function("foo_1.0.0.tar.gz")),
+    "untar"
   )
-  expect_equal(
-    choose_uncompress_function("foo_1.0.0.tgz"),
-    utils::untar
+  expect_output(
+    print(choose_uncompress_function("foo_1.0.0.tgz")),
+    "untar"
   )
-  expect_equal(
-    choose_uncompress_function("foo_1.0.0.zip"),
-    utils::unzip
+  expect_output(
+    print(choose_uncompress_function("foo_1.0.0.zip")),
+    "unzip"
   )
   expect_error(
     choose_uncompress_function("foo"),
