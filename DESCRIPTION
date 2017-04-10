@@ -22,6 +22,9 @@ Suggests:
     covr,
     mockery,
     testthat,
-    withr
-Remotes: r-pkgs/desc
+    withr,
+    zip
+Remotes:
+    r-pkgs/desc,
+    gaborcsardi/zip
 Encoding: UTF-8

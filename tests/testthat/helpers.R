@@ -40,7 +40,7 @@ make_tmp_pkg <- function(dir, name, type = c("source", "win.binary")) {
     if (type == "source") {
       utils::tar(pkgfile, name, compression = "gzip")
     } else {
-      utils::zip(pkgfile, name, flags = "-r9Xq")
+      zip::zip(pkgfile, name)
     }
   })
 
