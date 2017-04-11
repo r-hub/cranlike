@@ -1,6 +1,23 @@
 
 context("update")
 
+test_that("create", {
+  dir.create(dir <- tempfile())
+  on.exit(unlink(dir, recursive = TRUE), add = TRUE)
+
+  create_empty_PACKAGES(dir)
+
+  expect_equal(
+    package_versions(dir),
+    data.frame(
+      stringsAsFactors = FALSE,
+      Package = character(),
+      Version = character(),
+      MD5sum = character()
+    )
+  )
+})
+
 test_that("update", {
   dir.create(dir <- tempfile())
   on.exit(unlink(dir, recursive = TRUE), add = TRUE)
