@@ -17,7 +17,7 @@ test_that("package_vesions", {
     c("Package", "Version", "MD5sum")
   )
   expect_equal(
-    tab$Package,
-    c("foobar", "foobar2", "foobar3")
+    sort(tab$Package),
+    sort(c("foobar", "foobar2", "foobar3"))
   )
 })
