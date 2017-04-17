@@ -16,7 +16,7 @@ The goal is to make updates to the repository easier and faster,
 without the need of scanning all the package files.
 
 `cranlike` keeps the package data in a SQLite database, in addition
-to the `PACKAGES*` files. This databased is the canonical source of the
+to the `PACKAGES*` files. This database is the canonical source of the
 package data. It can be updated quickly, to add and remove packages.
 The `PACKAGES*` files are generated from the database.
 
