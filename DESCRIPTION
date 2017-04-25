@@ -14,7 +14,7 @@ RoxygenNote: 6.0.1
 Imports: 
     DBI,
     debugme,
-    desc,
+    desc (>= 1.1.0),
     RSQLite,
     tools,
     utils
@@ -25,6 +25,5 @@ Suggests:
     withr,
     zip
 Remotes:
-    r-pkgs/desc,
     gaborcsardi/zip
 Encoding: UTF-8
