@@ -24,6 +24,4 @@ Suggests:
     testthat,
     withr,
     zip
-Remotes:
-    gaborcsardi/zip
 Encoding: UTF-8
