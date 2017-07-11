@@ -104,7 +104,7 @@ add_PACKAGES <- function(files, dir = ".", fields = NULL) {
   sql <- "DELETE FROM packages WHERE file = ?file"
   with_db(db_file, {
     for (file in full_files) {
-      dbGetQuery(db, sqlInterpolate(db, sql, file = basename(file)))
+      dbExecute(db, sqlInterpolate(db, sql, file = basename(file)))
     }
     insert_packages(db, pkgs)
   })
@@ -139,7 +139,7 @@ remove_PACKAGES <- function(files, dir = ".") {
     sql <- "DELETE FROM packages WHERE MD5sum = ?md5"
     for (md5 in md5s) {
       "!DEBUG Removing `md5`"
-      dbGetQuery(db, sqlInterpolate(db, sql, md5 = md5))
+      dbExecute(db, sqlInterpolate(db, sql, md5 = md5))
     }
   })
 
