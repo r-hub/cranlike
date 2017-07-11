@@ -15,9 +15,9 @@ test_that("db_all_packages", {
   db_file <- tempfile()
   on.exit(unlink(db_file))
   with_db(db_file, {
-    dbGetQuery(db, "CREATE TABLE packages (Package TEXT, Version TEXT)")
-    dbGetQuery(db, "INSERT INTO packages VALUES ('igraph', '1.0.0')")
-    dbGetQuery(db, "INSERT INTO packages VALUES ('wegraph', '1.0.1')")
+    dbExecute(db, "CREATE TABLE packages (Package TEXT, Version TEXT)")
+    dbExecute(db, "INSERT INTO packages VALUES ('igraph', '1.0.0')")
+    dbExecute(db, "INSERT INTO packages VALUES ('wegraph', '1.0.1')")
   })
   expect_equal(
     db_all_packages(db_file),
@@ -33,9 +33,9 @@ test_that("db_get_fields", {
   db_file <- tempfile()
   on.exit(unlink(db_file))
   with_db(db_file, {
-    dbGetQuery(db, "CREATE TABLE packages (Package TEXT, Version TEXT)")
-    dbGetQuery(db, "INSERT INTO packages VALUES ('igraph', '1.0.0')")
-    dbGetQuery(db, "INSERT INTO packages VALUES ('wegraph', '1.0.1')")
+    dbExecute(db, "CREATE TABLE packages (Package TEXT, Version TEXT)")
+    dbExecute(db, "INSERT INTO packages VALUES ('igraph', '1.0.0')")
+    dbExecute(db, "INSERT INTO packages VALUES ('wegraph', '1.0.1')")
   })
   expect_equal(
     db_get_fields(db_file),

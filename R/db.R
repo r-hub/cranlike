@@ -27,7 +27,7 @@ with_db <- function(db_file, expr) {
   eval(substitute(expr), envir = list(db = con), enclos = parent.frame())
 }
 
-#' @importFrom DBI dbGetQuery
+#' @importFrom DBI dbGetQuery dbExecute
 
 db_all_packages <- function(db_file) {
   with_db(db_file, {
@@ -58,7 +58,7 @@ db_create_text_table <- function(db, name, columns, key) {
     if (!is.null(key)) paste0(',\n  PRIMARY KEY ("', key, '")\n'),
     ");"
   )
-  dbGetQuery(db, sql)
+  dbExecute(db, sql)
 }
 
 adjust_package_fields <- function(pkgs, fields) {
@@ -94,8 +94,8 @@ update_db <- function(dir, db_file, fields, type) {
   with_db(db_file, {
 
     do_all <- function() {
-      dbGetQuery(db, "BEGIN EXCLUSIVE")
-      on.exit(try(dbGetQuery(db, "ROLLBACK"), silent = TRUE))
+      dbExecute(db, "BEGIN EXCLUSIVE")
+      on.exit(try(dbExecute(db, "ROLLBACK"), silent = TRUE))
 
       ## Packages in the DB
       db_md5 <- dbGetQuery(db, "SELECT MD5sum FROM packages")$MD5sum
@@ -105,7 +105,7 @@ update_db <- function(dir, db_file, fields, type) {
         sql <- "DELETE FROM packages WHERE MD5sum = ?md5sum"
         for (rem in removed) {
           "!DEBUG Removing `rem`"
-          dbGetQuery(db, sqlInterpolate(db, sql, md5sum = rem))
+          dbExecute(db, sqlInterpolate(db, sql, md5sum = rem))
         }
       }
 
@@ -117,7 +117,7 @@ update_db <- function(dir, db_file, fields, type) {
       }
 
       ## All good
-      dbGetQuery(db, "COMMIT")
+      dbExecute(db, "COMMIT")
       on.exit(NULL)
     }
 
