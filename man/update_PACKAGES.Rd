@@ -10,13 +10,16 @@ update_PACKAGES(dir = ".", fields = NULL, type = c("source", "mac.binary",
 \arguments{
 \item{dir}{Character vector describing the location of the repository
     (directory including source or binary packages) to generate the
-    \file{PACKAGES} and \file{PACKAGES.gz} files from and write them to.
+    \file{PACKAGES}, \file{PACKAGES.gz} and \file{PACKAGES.rds} files
+    from and write them to.
   }
 
 \item{fields}{
     a character vector giving the fields to be used in the
-    \file{PACKAGES} and \file{PACKAGES.gz} files in addition to the
-    default ones, or \code{NULL} (default).  The default corresponds to
+    \file{PACKAGES}, \file{PACKAGES.gz} and \file{PACKAGES.rds} files in
+    addition to the default ones, or \code{NULL} (default).
+
+    The default corresponds to
     the fields needed by \code{\link{available.packages}}:
     \code{"Package"}, \code{"Version"}, \code{"Priority"},
     \code{"Depends"}, \code{"Imports"}, \code{"LinkingTo"},
