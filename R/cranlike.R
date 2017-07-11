@@ -34,7 +34,7 @@ create_empty_PACKAGES <- function(dir = ".", fields = NULL) {
 #' This function is similar to [tools::write_PACKAGES()], with some
 #' differences:
 #' * It always uses the `MD5sum` field.
-#' * It defaults to `addFiles = TRUE`, to allow following the packag
+#' * It defaults to `addFiles = TRUE`, to allow following the package
 #'   files better.
 #' * It does not support the `verbose`, `unpacked`, and `subdirs`
 #'   arguments currently.
@@ -44,7 +44,7 @@ create_empty_PACKAGES <- function(dir = ".", fields = NULL) {
 #' `update_PACKAGES` uses a SQLite database to aid updating PACKAGES*
 #' files quickly. It this database does not exist, then it will be created
 #' based on the existing PACKAGES* files. If no PACKAGES* files exist,
-#' either, then these will be created via `
+#' either, then these will be created via `tools::write_PACKAGES()`.
 #'
 #' @inheritParams create_empty_PACKAGES
 #' @inheritParams tools::write_PACKAGES

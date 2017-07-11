@@ -43,7 +43,7 @@ This function is similar to \code{\link[tools:write_PACKAGES]{tools::write_PACKA
 differences:
 \itemize{
 \item It always uses the \code{MD5sum} field.
-\item It defaults to \code{addFiles = TRUE}, to allow following the packag
+\item It defaults to \code{addFiles = TRUE}, to allow following the package
 files better.
 \item It does not support the \code{verbose}, \code{unpacked}, and \code{subdirs}
 arguments currently.
@@ -55,7 +55,7 @@ reindexes files that have added, removed or updated.
 \code{update_PACKAGES} uses a SQLite database to aid updating PACKAGES*
 files quickly. It this database does not exist, then it will be created
 based on the existing PACKAGES* files. If no PACKAGES* files exist,
-either, then these will be created via `
+either, then these will be created via \code{tools::write_PACKAGES()}.
 }
 \seealso{
 Other PACKAGES manipulation: \code{\link{add_PACKAGES}},
