@@ -10,13 +10,16 @@ update_PACKAGES(dir = ".", fields = NULL, type = c("source", "mac.binary",
 \arguments{
 \item{dir}{Character vector describing the location of the repository
     (directory including source or binary packages) to generate the
-    \file{PACKAGES} and \file{PACKAGES.gz} files from and write them to.
+    \file{PACKAGES}, \file{PACKAGES.gz} and \file{PACKAGES.rds} files
+    from and write them to.
   }
 
 \item{fields}{
     a character vector giving the fields to be used in the
-    \file{PACKAGES} and \file{PACKAGES.gz} files in addition to the
-    default ones, or \code{NULL} (default).  The default corresponds to
+    \file{PACKAGES}, \file{PACKAGES.gz} and \file{PACKAGES.rds} files in
+    addition to the default ones, or \code{NULL} (default).
+
+    The default corresponds to
     the fields needed by \code{\link{available.packages}}:
     \code{"Package"}, \code{"Version"}, \code{"Priority"},
     \code{"Depends"}, \code{"Imports"}, \code{"LinkingTo"},
@@ -40,7 +43,7 @@ This function is similar to \code{\link[tools:write_PACKAGES]{tools::write_PACKA
 differences:
 \itemize{
 \item It always uses the \code{MD5sum} field.
-\item It defaults to \code{addFiles = TRUE}, to allow following the packag
+\item It defaults to \code{addFiles = TRUE}, to allow following the package
 files better.
 \item It does not support the \code{verbose}, \code{unpacked}, and \code{subdirs}
 arguments currently.
@@ -52,7 +55,7 @@ reindexes files that have added, removed or updated.
 \code{update_PACKAGES} uses a SQLite database to aid updating PACKAGES*
 files quickly. It this database does not exist, then it will be created
 based on the existing PACKAGES* files. If no PACKAGES* files exist,
-either, then these will be created via `
+either, then these will be created via \code{tools::write_PACKAGES()}.
 }
 \seealso{
 Other PACKAGES manipulation: \code{\link{add_PACKAGES}},
