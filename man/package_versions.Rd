@@ -4,13 +4,16 @@
 \alias{package_versions}
 \title{List all packages and versions in a CRAN-like repository}
 \usage{
-package_versions(dir = ".")
+package_versions(dir = ".", xcolumns = character())
 }
 \arguments{
 \item{dir}{Path to the repository.}
+
+\item{xcolumns}{Extra columns to include in the result.}
 }
 \value{
-Data frame with three columns: \code{Package}, \code{Version}, \code{MD5sum}.
+Data frame with at least three columns:
+\code{Package}, \code{Version}, \code{MD5sum}.
 }
 \description{
 List all packages and versions in a CRAN-like repository
