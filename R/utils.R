@@ -28,3 +28,7 @@ check_existing_files <- function(files) {
 drop_nulls <- function(l) {
   l[ ! vapply(l, is.null, TRUE) ]
 }
+
+str_trim <- function(x) {
+  sub("\\s+$", "", sub("^\\s+", "", x))
+}

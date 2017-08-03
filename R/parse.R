@@ -44,7 +44,7 @@ parse_package_files <- function(files, md5s, fields) {
 #' @importFrom desc description
 
 get_desc <- function(file) {
-  tryCatch(
+  desc <- tryCatch(
     description$new(file),
     error = function(e) {
       warning(
@@ -55,6 +55,10 @@ get_desc <- function(file) {
       NULL
     }
   )
+
+  desc$set("Version", str_trim(desc$get("Version")))
+
+  desc
 }
 
 #' @importFrom utils untar unzip
