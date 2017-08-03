@@ -52,7 +52,7 @@ test_that("create_db", {
 
 test_that("db_create_text_table", {
   res <- NULL
-  mockery::stub(db_create_text_table, 'dbGetQuery', function(x, y) res <<- y)
+  mockery::stub(db_create_text_table, 'dbExecute', function(x, y) res <<- y)
   db_create_text_table(NULL, "table", c("a", "b"), "b")
   expect_match(res, paste0(
     'CREATE TABLE table[(]\\s*"a" TEXT,\\s*"b" TEXT,',
