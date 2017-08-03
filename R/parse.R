@@ -44,8 +44,13 @@ parse_package_files <- function(files, md5s, fields) {
 #' @importFrom desc description
 
 get_desc <- function(file) {
-  desc <- tryCatch(
-    description$new(file),
+  tryCatch(
+    {
+      desc <- description$new(file)
+      v <- desc$get("Version")
+      if (!is.na(v)) desc$set("Version", str_trim(v))
+      desc
+    },
     error = function(e) {
       warning(
         "Cannot extract valid DESCRIPTION, ", sQuote(file),
@@ -55,10 +60,6 @@ get_desc <- function(file) {
       NULL
     }
   )
-
-  desc$set("Version", str_trim(desc$get("Version")))
-
-  desc
 }
 
 #' @importFrom utils untar unzip
