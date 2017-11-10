@@ -18,13 +18,16 @@ get_fields <- function(fields) {
   unique(c(fields, "File"))
 }
 
-#' @importFrom DBI dbConnect dbDisconnect
+#' @importFrom DBI dbConnect dbDisconnect dbWithTransaction
 #' @importFrom RSQLite SQLite
 
 with_db <- function(db_file, expr) {
   on.exit(dbDisconnect(con))
   con <- dbConnect(SQLite(), db_file)
-  eval(substitute(expr), envir = list(db = con), enclos = parent.frame())
+  dbWithTransaction(
+    con,
+    eval(substitute(expr), envir = list(db = con), enclos = parent.frame())
+  )
 }
 
 #' @importFrom DBI dbGetQuery dbExecute
@@ -94,9 +97,6 @@ update_db <- function(dir, db_file, fields, type) {
   with_db(db_file, {
 
     do_all <- function() {
-      dbExecute(db, "BEGIN EXCLUSIVE")
-      on.exit(try(dbExecute(db, "ROLLBACK"), silent = TRUE))
-
       ## Packages in the DB
       db_md5 <- dbGetQuery(db, "SELECT MD5sum FROM packages")$MD5sum
 
@@ -115,10 +115,6 @@ update_db <- function(dir, db_file, fields, type) {
         pkgs <- parse_package_files(added_files, added, fields)
         insert_packages(db, pkgs)
       }
-
-      ## All good
-      dbExecute(db, "COMMIT")
-      on.exit(NULL)
     }
 
     do_all()
