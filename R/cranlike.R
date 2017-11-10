@@ -99,7 +99,7 @@ add_PACKAGES <- function(files, dir = ".", fields = NULL) {
 
   pkgs <- parse_package_files(full_files, md5s, fields)
   sql <- "DELETE FROM packages WHERE file = ?file"
-  with_db(db_file, {
+  with_db_lock(db_file, {
     for (file in full_files) {
       dbExecute(db, sqlInterpolate(db, sql, file = basename(file)))
     }
@@ -130,7 +130,7 @@ remove_PACKAGES <- function(files, dir = ".") {
   md5s <- md5sum(full_files)
 
   db_file <- get_db_file(dir)
-  with_db(db_file, {
+  with_db_lock(db_file, {
     sql <- "DELETE FROM packages WHERE MD5sum = ?md5"
     for (md5 in md5s) {
       "!DEBUG Removing `md5`"

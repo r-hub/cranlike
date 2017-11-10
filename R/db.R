@@ -18,15 +18,58 @@ get_fields <- function(fields) {
   unique(c(fields, "File"))
 }
 
-#' @importFrom DBI dbConnect dbDisconnect dbWithTransaction
+db_env <- new.env()
+
+#' Perform a DB query, without explicit locking
+#'
+#' This is for read operations. They can also be called from
+#' within a transaction. In this case the database handle will
+#' be reused.
+#'
+#' @param db_file File of the DB.
+#' @param expr Expression to evaluate, it can refer to the connection
+#'   handle as `db`.
+#'
+#' @importFrom DBI dbConnect dbDisconnect dbWithTransaction dbIsValid
 #' @importFrom RSQLite SQLite
+#'
+#' @keywords internal
 
 with_db <- function(db_file, expr) {
-  on.exit(dbDisconnect(con))
-  con <- dbConnect(SQLite(), db_file)
-  dbWithTransaction(
-    con,
-    eval(substitute(expr), envir = list(db = con), enclos = parent.frame())
+  con <- db_env$con
+  if (is.null(con) || ! dbIsValid(con)) {
+    con <- dbConnect(SQLite(), db_file, synchronous = NULL)
+    dbExecute(con, "PRAGMA busy_timeout = 60000")
+    on.exit(dbDisconnect(con), add = TRUE)
+  }
+  eval(substitute(expr), envir = list(db = con), enclos = parent.frame())
+}
+
+#' Perform a DB query, with locking
+#'
+#' This creates a transaction, and an exclusive lock.
+#' It always creates a new DB connection, and closes it on exit.
+#'
+#' @inheritParams with_db
+#'
+#' @keywords internal
+
+with_db_lock <- function(db_file, expr) {
+  on.exit(dbDisconnect(con), add = TRUE)
+  if (is.null(db_env$con) || ! dbIsValid(db_env$con)) {
+    db_env$con <- dbConnect(SQLite(), db_file, synchronous = NULL)
+  }
+  con <- db_env$con
+  pnt <- parent.frame()
+  dbExecute(con, "PRAGMA busy_timeout = 60000")
+  dbExecute(con, "BEGIN EXCLUSIVE")
+  withCallingHandlers(
+    {
+      res <- eval(substitute(expr), envir = list(db = con), enclos = pnt)
+      dbExecute(con, "COMMIT")
+      res
+    },
+    error = function(e) dbExecute(con, "ROLLBACK")
   )
 }
 
@@ -94,7 +137,7 @@ update_db <- function(dir, db_file, fields, type) {
   files <- list_package_files(dir, type)
   dir_md5 <- md5sum(files)
 
-  with_db(db_file, {
+  with_db_lock(db_file, {
 
     ## Packages in the DB
     db_md5 <- dbGetQuery(db, "SELECT MD5sum FROM packages")$MD5sum
