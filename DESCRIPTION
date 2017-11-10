@@ -10,7 +10,7 @@ LazyData: true
 URL: https://github.com/r-hub/cranlike
 BugReports: https://github.com/r-hub/cranlike/issues
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 6.0.1
+RoxygenNote: 6.0.1.9000
 Imports: 
     DBI,
     debugme,

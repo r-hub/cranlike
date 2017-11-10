@@ -61,3 +61,4 @@ either, then these will be created via \code{tools::write_PACKAGES()}.
 Other PACKAGES manipulation: \code{\link{add_PACKAGES}},
   \code{\link{remove_PACKAGES}}
 }
+\concept{PACKAGES manipulation}

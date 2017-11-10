@@ -20,3 +20,4 @@ from the directory.
 Other PACKAGES manipulation: \code{\link{add_PACKAGES}},
   \code{\link{update_PACKAGES}}
 }
+\concept{PACKAGES manipulation}

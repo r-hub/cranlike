@@ -23,3 +23,4 @@ not exist, then it will be created.
 Other PACKAGES manipulation: \code{\link{remove_PACKAGES}},
   \code{\link{update_PACKAGES}}
 }
+\concept{PACKAGES manipulation}
