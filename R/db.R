@@ -96,28 +96,26 @@ update_db <- function(dir, db_file, fields, type) {
 
   with_db(db_file, {
 
-    do_all <- function() {
-      ## Packages in the DB
-      db_md5 <- dbGetQuery(db, "SELECT MD5sum FROM packages")$MD5sum
+    ## Packages in the DB
+    db_md5 <- dbGetQuery(db, "SELECT MD5sum FROM packages")$MD5sum
 
-      ## Files removed?
-      if (length(removed <- setdiff(db_md5, dir_md5)) > 0) {
-        sql <- "DELETE FROM packages WHERE MD5sum = ?md5sum"
-        for (rem in removed) {
-          "!DEBUG Removing `rem`"
-          dbExecute(db, sqlInterpolate(db, sql, md5sum = rem))
-        }
-      }
-
-      ## Any files added?
-      if (length(added <- setdiff(dir_md5, db_md5)) > 0) {
-        added_files <- names(dir_md5)[match(added, dir_md5)]
-        pkgs <- parse_package_files(added_files, added, fields)
-        insert_packages(db, pkgs)
+    ## Files removed?
+    if (length(removed <- setdiff(db_md5, dir_md5)) > 0) {
+      sql <- "DELETE FROM packages WHERE MD5sum = ?md5sum"
+      for (rem in removed) {
+        "!DEBUG Removing `rem`"
+        dbExecute(db, sqlInterpolate(db, sql, md5sum = rem))
       }
     }
 
-    do_all()
+    ## Any files added?
+    if (length(added <- setdiff(dir_md5, db_md5)) > 0) {
+      added_files <- names(dir_md5)[match(added, dir_md5)]
+      pkgs <- parse_package_files(added_files, added, fields)
+      insert_packages(db, pkgs)
+    }
+
+    write_packages_files(dir, db_file)
   })
 }
 

@@ -68,9 +68,6 @@ update_PACKAGES <- function(
 
   ## Update DB
   update_db(dir, db_file, fields, type)
-
-  ## Write out new PACKAGES* files
-  write_packages_files(dir, db_file)
 }
 
 #' Add R packages to the package database
@@ -107,10 +104,8 @@ add_PACKAGES <- function(files, dir = ".", fields = NULL) {
       dbExecute(db, sqlInterpolate(db, sql, file = basename(file)))
     }
     insert_packages(db, pkgs)
+    write_packages_files(dir, db_file)
   })
-
-  ## Write out new PACKAGES* files
-  write_packages_files(dir, db_file)
 }
 
 #' Remove package from a package database
@@ -141,11 +136,11 @@ remove_PACKAGES <- function(files, dir = ".") {
       "!DEBUG Removing `md5`"
       dbExecute(db, sqlInterpolate(db, sql, md5 = md5))
     }
+
+    ## Remove files
+    unlink(full_files)
+
+    ## Write out new PACKAGES* files
+    write_packages_files(dir, db_file)
   })
-
-  ## Remove files
-  unlink(full_files)
-
-  ## Write out new PACKAGES* files
-  write_packages_files(dir, db_file)
 }
