@@ -23,10 +23,7 @@ create_empty_PACKAGES <- function(dir = ".", fields = NULL) {
   db_file <- get_db_file(dir)
 
   ## Create DB if needed
-  if (!file.exists(db_file)) create_db(db_file, fields = fields)
-
-  ## Write out new PACKAGES* files
-  write_packages_files(dir, db_file)
+  if (!file.exists(db_file)) create_db(dir, db_file, fields = fields)
 }
 
 #' Create or update PACKAGES* files for a CRAN-like repository
@@ -64,7 +61,7 @@ update_PACKAGES <- function(
   db_file <- get_db_file(dir)
 
   ## Create DB if needed
-  if (!file.exists(db_file)) create_db(db_file, fields = fields)
+  if (!file.exists(db_file)) create_db(dir, db_file, fields = fields)
 
   ## Update DB
   update_db(dir, db_file, fields, type)
@@ -95,7 +92,7 @@ add_PACKAGES <- function(files, dir = ".", fields = NULL) {
 
   db_file <- get_db_file(dir)
   fields <- get_fields(fields)
-  if (!file.exists(db_file)) create_db(db_file, fields = fields)
+  if (!file.exists(db_file)) create_db(dir, db_file, fields = fields)
 
   pkgs <- parse_package_files(full_files, md5s, fields)
   sql <- "DELETE FROM packages WHERE file = ?file"

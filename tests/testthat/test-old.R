@@ -30,7 +30,7 @@ test_that("write_package_files", {
 
   db_file <- get_db_file(dir)
   fields <- get_fields(NULL)
-  create_db(db_file, fields)
+  create_db(dir, db_file, fields)
   update_db(dir, db_file, fields, type = "source")
 
   write_packages_files(dir, db_file)

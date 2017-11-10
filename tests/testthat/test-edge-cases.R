@@ -7,7 +7,7 @@ test_that("no packages", {
 
   db_file <- get_db_file(dir)
   fields <- get_fields(NULL)
-  create_db(db_file, fields = fields)
+  create_db(dirname(db_file), db_file, fields = fields)
 
   df <- db_all_packages(db_file)
   expect_equal(get_packages_txt(df), "")

@@ -44,7 +44,10 @@ test_that("db_get_fields", {
 })
 
 test_that("create_db", {
-  create_db(db_file <- tempfile(), fields = c("foo", "bar", "MD5sum"))
+  db_file <- tempfile()
+  on.exit(unlink(db_file))
+  create_db(dirname(db_file), db_file,
+            fields = c("Package", "Version", "foo", "bar", "MD5sum"))
   expect_silent(
     with_db(db_file, dbGetQuery(db, "SELECT * from packages"))
   )
@@ -95,7 +98,7 @@ test_that("update_db", {
 
   db_file <- get_db_file(dir)
   fields <- get_fields(NULL)
-  create_db(db_file, fields)
+  create_db(dir, db_file, fields)
   update_db(dir, db_file, fields, type = "source")
 
   tab <- db_all_packages(db_file)

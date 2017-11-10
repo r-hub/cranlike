@@ -28,7 +28,7 @@ test_that("update", {
 
   db_file <- get_db_file(dir)
   fields <- get_fields(NULL)
-  create_db(db_file, fields)
+  create_db(dir, db_file, fields)
   update_PACKAGES(dir)
 
   tab <- db_all_packages(db_file)
@@ -47,7 +47,7 @@ test_that("update, zip files", {
 
   db_file <- get_db_file(dir)
   fields <- get_fields(NULL)
-  create_db(db_file, fields)
+  create_db(dir, db_file, fields)
   update_PACKAGES(dir, type = "win.binary")
 
   tab <- db_all_packages(db_file)
@@ -66,7 +66,7 @@ test_that("add", {
 
   db_file <- get_db_file(dir)
   fields <- get_fields(NULL)
-  create_db(db_file, fields)
+  create_db(dir, db_file, fields)
   update_db(dir, db_file, fields, type = "source")
   tab <- db_all_packages(db_file)
   expect_equal(names(tab), fields)
@@ -122,7 +122,7 @@ test_that("remove", {
 
   db_file <- get_db_file(dir)
   fields <- get_fields(NULL)
-  create_db(db_file, fields)
+  create_db(dir, db_file, fields)
   update_PACKAGES(dir)
 
   tab <- db_all_packages(db_file)
