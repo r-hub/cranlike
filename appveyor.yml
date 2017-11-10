@@ -19,7 +19,6 @@ environment:
 
 build_script:
   - travis-tool.sh install_deps
-  - travis-tool.sh install_github gaborcsardi/zip
 
 test_script:
   - travis-tool.sh run_tests
