@@ -45,7 +45,8 @@ test_that("write_package_files", {
     as.data.frame(tab2, stringsAsFactors = FALSE)
   )
 
-  tab3 <- read.dcf(gzfile(file.path(dir, "PACKAGES")))
+  tab3 <- read.dcf(gz <- gzfile(file.path(dir, "PACKAGES")))
+  close(gz)
   expect_equal(tab2, tab3)
 
   tab4 <- readRDS(file.path(dir, "PACKAGES.rds"))
