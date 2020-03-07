@@ -23,7 +23,7 @@ The `PACKAGES*` files are generated from the database.
 ## Installation
 
 ```r
-source("https://install-github.me/r-hub/cranlike")
+install.packages("cranlike")
 ```
 
 ## Usage
