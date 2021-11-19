@@ -63,31 +63,6 @@ test_that("db_create_text_table", {
   ))
 })
 
-test_that("adjust_package_fields", {
-
-  df <- data.frame(
-    stringsAsFactors = FALSE,
-    col1 = c("a", "b"),
-    col2 = c("x", "y"),
-    col3 = c("z", "z")
-  )
-
-  expect_equal(adjust_package_fields(df, names(df)), df)
-
-  expected <- data.frame(
-    stringsAsFactors = FALSE,
-    col1 = c("a", "b"),
-    col3 = c("z", "z"),
-    col4 = c(NA_character_, NA_character_),
-    col5 = c(NA_character_, NA_character_)
-  )
-
-  expect_equal(
-    adjust_package_fields(df, c("col1", "col3", "col4", "col5")),
-    expected
-  )
-})
-
 test_that("update_db", {
   dir.create(dir <- tempfile())
   on.exit(unlink(dir, recursive = TRUE), add = TRUE)
@@ -101,8 +76,9 @@ test_that("update_db", {
   create_db(dir, db_file, fields)
   update_db(dir, db_file, fields, type = "source")
 
+  all_fields <- c(fields, extra_columns())
   tab <- db_all_packages(db_file)
-  expect_equal(names(tab), fields)
+  expect_equal(names(tab), all_fields)
   expect_equal(tab$Package, c("foobar", "foobar2", "foobar3"))
   expect_equal(tab$File, basename(c(foo, foo2, foo3)))
 
@@ -111,7 +87,7 @@ test_that("update_db", {
   update_db(dir, db_file, fields, type = "source")
 
   tab <- db_all_packages(db_file)
-  expect_equal(names(tab), fields)
+  expect_equal(names(tab), all_fields)
   expect_equal(tab$Package, c("foobar", "foobar2"))
   expect_equal(tab$File, basename(c(foo, foo2)))
 })

@@ -31,8 +31,9 @@ test_that("update", {
   create_db(dir, db_file, fields)
   update_PACKAGES(dir)
 
+  all_fields <- c(fields, extra_columns())
   tab <- db_all_packages(db_file)
-  expect_equal(names(tab), fields)
+  expect_equal(names(tab), all_fields)
   expect_equal(tab$Package, c("foobar", "foobar2", "foobar3"))
   expect_equal(tab$File, basename(c(foo, foo2, foo3)))
 })
@@ -50,8 +51,9 @@ test_that("update, zip files", {
   create_db(dir, db_file, fields)
   update_PACKAGES(dir, type = "win.binary")
 
+  all_fields <- c(fields, extra_columns())
   tab <- db_all_packages(db_file)
-  expect_equal(names(tab), fields)
+  expect_equal(names(tab), all_fields)
   expect_equal(tab$Package, c("foobar", "foobar2", "foobar3"))
   expect_equal(tab$File, basename(c(foo, foo2, foo3)))
 })
@@ -69,7 +71,8 @@ test_that("add", {
   create_db(dir, db_file, fields)
   update_db(dir, db_file, fields, type = "source")
   tab <- db_all_packages(db_file)
-  expect_equal(names(tab), fields)
+  all_fields <- c(fields, extra_columns())
+  expect_equal(names(tab), all_fields)
   expect_equal(tab$Package, c("foobar2"))
   expect_equal(tab$File, basename(c(foo2)))
 
@@ -77,7 +80,7 @@ test_that("add", {
   add_PACKAGES(basename(foo), dir)
 
   tab <- db_all_packages(db_file)
-  expect_equal(names(tab), fields)
+  expect_equal(names(tab), all_fields)
   expect_equal(tab$Package, c("foobar", "foobar2"))
   expect_equal(tab$File, basename(c(foo, foo2)))
 
@@ -85,7 +88,7 @@ test_that("add", {
   add_PACKAGES(basename(foo3), dir)
 
   tab <- db_all_packages(db_file)
-  expect_equal(names(tab), fields)
+  expect_equal(names(tab), all_fields)
   expect_equal(tab$Package, c("foobar", "foobar2", "foobar3"))
   expect_equal(tab$File, basename(c(foo, foo2, foo3)))
 })
@@ -104,7 +107,8 @@ test_that("add, create DB on demand", {
 
   db_file <- get_db_file(dir)
   tab <- db_all_packages(db_file)
-  expect_equal(names(tab), get_fields(NULL))
+  all_fields <- c(get_fields(NULL), extra_columns())
+  expect_equal(names(tab), all_fields)
   expect_equal(tab$Package, c("foobar", "foobar2", "foobar3"))
   expect_equal(tab$File, basename(c(foo, foo2, foo3)))
 })
@@ -125,15 +129,16 @@ test_that("remove", {
   create_db(dir, db_file, fields)
   update_PACKAGES(dir)
 
+  all_fields <- c(fields, extra_columns())
   tab <- db_all_packages(db_file)
-  expect_equal(names(tab), fields)
+  expect_equal(names(tab), all_fields)
   expect_equal(tab$Package, c("foobar", "foobar2", "foobar3"))
   expect_equal(tab$File, basename(c(foo, foo2, foo3)))
 
   remove_PACKAGES(basename(foo3), dir)
 
   tab <- db_all_packages(db_file)
-  expect_equal(names(tab), fields)
+  expect_equal(names(tab), all_fields)
   expect_equal(tab$Package, c("foobar", "foobar2"))
   expect_equal(tab$File, basename(c(foo, foo2)))
 })

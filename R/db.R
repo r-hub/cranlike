@@ -3,6 +3,8 @@
 
 globalVariables("db")
 
+extra_columns <- function() c("Filesize")
+
 get_db_file <- function(dir) {
   file.path(dir, "PACKAGES.db")
 }
@@ -11,7 +13,10 @@ get_fields <- function(fields) {
   if (is.null(fields)) {
     fields <- unique(c(
       ("tools" %:::% ".get_standard_repository_db_fields")(),
-      "MD5sum"
+      "MD5sum",
+      "SystemRequirements",
+      "Built",
+      "Published"
     ))
   }
 
@@ -89,7 +94,8 @@ db_get_fields <- function(db_file) {
 
 #' @importFrom DBI dbWriteTable
 
-create_db <- function(dir, db_file, fields) {
+create_db <- function(dir, db_file, fields, xcolumns = NULL) {
+  fields <- c(fields, extra_columns(), names(xcolumns))
   "!DEBUG Creating DB in `basename(db_file)`"
   dir.create(dirname(db_file), showWarnings = FALSE, recursive = TRUE)
   with_db_lock(db_file, {
@@ -108,29 +114,10 @@ db_create_text_table <- function(db, name, columns, key) {
   dbExecute(db, sql)
 }
 
-adjust_package_fields <- function(pkgs, fields) {
-  if (length(add <- setdiff(fields, colnames(pkgs)))) {
-    newcols <- structure(
-      replicate(
-        length(add),
-        rep(NA_character_, nrow(pkgs)),
-        simplify = FALSE
-      ),
-      names = add
-    )
-    pkgs <- as.data.frame(
-      c(as.list(pkgs), newcols),
-      stringsAsFactors = FALSE
-    )
-  }
-
-  pkgs[, fields]
-}
-
 #' @importFrom tools md5sum
 #' @importFrom DBI sqlInterpolate
 
-update_db <- function(dir, db_file, fields, type) {
+update_db <- function(dir, db_file, fields, type, xcolumns = NULL) {
 
   "!DEBUG Updating DB in `basename(db_file)`"
 
@@ -156,6 +143,9 @@ update_db <- function(dir, db_file, fields, type) {
     if (length(added <- setdiff(dir_md5, db_md5)) > 0) {
       added_files <- names(dir_md5)[match(added, dir_md5)]
       pkgs <- parse_package_files(added_files, added, fields)
+      if (length(xcolumns)) {
+        pkgs <- cbind(pkgs, xcolumns)
+      }
       insert_packages(db, pkgs)
     }
 

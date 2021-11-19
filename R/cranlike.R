@@ -12,10 +12,13 @@ NULL
 #' Create an empty package database if it does not exist.
 #' It also updates the PACKAGES* files from the new (empty) database.
 #'
+#' @param xcolumns Extra scalar columns to add to the database.
+#'   Should be a named list of character scalars or `NULL` for no extra
+#'   columns.
 #' @inheritParams tools::write_PACKAGES
 #' @export
 
-create_empty_PACKAGES <- function(dir = ".", fields = NULL) {
+create_empty_PACKAGES <- function(dir = ".", fields = NULL, xcolumns = NULL) {
 
   "!DEBUG Creating empty package DB and PACKAGES* files"
   fields <- get_fields(fields)
@@ -23,7 +26,9 @@ create_empty_PACKAGES <- function(dir = ".", fields = NULL) {
   db_file <- get_db_file(dir)
 
   ## Create DB if needed
-  if (!file.exists(db_file)) create_db(dir, db_file, fields = fields)
+  if (!file.exists(db_file)) {
+    create_db(dir, db_file, fields = fields, xcolumns = xcolumns)
+  }
 }
 
 #' Create or update PACKAGES* files for a CRAN-like repository
@@ -51,7 +56,8 @@ create_empty_PACKAGES <- function(dir = ".", fields = NULL) {
 
 update_PACKAGES <- function(
   dir = ".", fields = NULL,
-  type = c("source", "mac.binary", "win.binary")) {
+  type = c("source", "mac.binary", "win.binary"),
+  xcolumns = NULL) {
 
   "!DEBUG Updating DB and PACKAGES* from directory content"
   fields <- get_fields(fields)
@@ -61,10 +67,12 @@ update_PACKAGES <- function(
   db_file <- get_db_file(dir)
 
   ## Create DB if needed
-  if (!file.exists(db_file)) create_db(dir, db_file, fields = fields)
+  if (!file.exists(db_file)) {
+    create_db(dir, db_file, fields = fields, xcolumns = xcolumns)
+  }
 
   ## Update DB
-  update_db(dir, db_file, fields, type)
+  update_db(dir, db_file, fields, type, xcolumns)
 }
 
 #' Add R packages to the package database
@@ -77,11 +85,12 @@ update_PACKAGES <- function(
 #' @param dir Package directory.
 #' @param fields Fields to use in the database if the database is
 #'   created.
+#' @inheritParams create_empty_PACKAGES
 #'
 #' @family PACKAGES manipulation
 #' @export
 
-add_PACKAGES <- function(files, dir = ".", fields = NULL) {
+add_PACKAGES <- function(files, dir = ".", fields = NULL, xcolumns = NULL) {
 
   "!DEBUG Adding `length(files)` packages"
 
@@ -92,9 +101,14 @@ add_PACKAGES <- function(files, dir = ".", fields = NULL) {
 
   db_file <- get_db_file(dir)
   fields <- get_fields(fields)
-  if (!file.exists(db_file)) create_db(dir, db_file, fields = fields)
+  if (!file.exists(db_file)) {
+    create_db(dir, db_file, fields = fields, xcolumns = xcolumns)
+  }
 
   pkgs <- parse_package_files(full_files, md5s, fields)
+  if (length(xcolumns)) {
+    pkgs <- cbind(pkgs, xcolumns)
+  }
   sql <- "DELETE FROM packages WHERE file = ?file"
   with_db_lock(db_file, {
     for (file in full_files) {

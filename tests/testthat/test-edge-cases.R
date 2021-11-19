@@ -50,8 +50,9 @@ test_that("valid and invalid package files", {
 
   db_file <- get_db_file(dir)
   fields <- get_fields(NULL)
+  all_fields <- c(fields, extra_columns())
   tab <- db_all_packages(db_file)
-  expect_equal(names(tab), fields)
+  expect_equal(names(tab), all_fields)
   expect_equal(tab$Package, c("foobar", "foobar2"))
 })
 

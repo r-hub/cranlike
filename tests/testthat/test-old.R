@@ -41,7 +41,7 @@ test_that("write_package_files", {
   tab <- db_all_packages(db_file)
   tab2 <- read.dcf(file.path(dir, "PACKAGES"))
   expect_equal(
-    tab[, c("Package", "Version", "License", "MD5sum", "File")],
+    tab[, c("Package", "Version", "License", "MD5sum", "File", "Filesize")],
     as.data.frame(tab2, stringsAsFactors = FALSE)
   )
 
@@ -52,6 +52,6 @@ test_that("write_package_files", {
   tab4 <- readRDS(file.path(dir, "PACKAGES.rds"))
   expect_equal(
     tab2,
-    tab4[, c("Package", "Version", "License", "MD5sum", "File")]
+    tab4[, c("Package", "Version", "License", "MD5sum", "File", "Filesize")]
   )
 })

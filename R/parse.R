@@ -32,6 +32,9 @@ parse_package_files <- function(files, md5s, fields) {
   ## Add file names
   df$File <- basename(files[valid])
 
+  ## Some extra fields
+  df$Filesize <- as.character(file.size(files[valid]))
+
   ## Standardize licenses, or NA, like in tools
   license_info <- analyze_licenses(df$License)
   df$License <- ifelse(license_info$is_standardizable,
