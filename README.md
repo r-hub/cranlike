@@ -3,12 +3,13 @@
 
 > Tools for CRAN-like Repositories
 
+<!-- badges: start -->
 [![Project Status: Active - The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
-[![Linux Build Status](https://travis-ci.org/r-hub/cranlike.svg?branch=master)](https://travis-ci.org/r-hub/cranlike)
-[![Windows Build status](https://ci.appveyor.com/api/projects/status/github/r-hub/cranlike?svg=true)](https://ci.appveyor.com/project/gaborcsardi/cranlike)
+[![R build status](https://github.com/r-hub/cranlike/workflows/R-CMD-check/badge.svg)](https://github.com/r-hub/cranlike/actions)
 [![](http://www.r-pkg.org/badges/version/cranlike)](http://www.r-pkg.org/pkg/cranlike)
 [![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/cranlike)](http://www.r-pkg.org/pkg/cranlike)
-[![Coverage Status](https://img.shields.io/codecov/c/github/r-hub/cranlike/master.svg)](https://codecov.io/github/r-hub/cranlike?branch=master)
+[![Coverage status](https://codecov.io/gh/r-hub/cranlike/branch/master/graph/badge.svg)](https://codecov.io/github/r-hub/cranlike?branch=master)
+<!-- badges: end -->
 
 A set of functions to manage CRAN-like repositories efficiently.
 This package is an alternative to `tools::write_PACKAGES`.
