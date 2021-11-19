@@ -6,7 +6,6 @@ Maintainer: Gábor Csárdi <csardi.gabor@gmail.com>
 Description: A set of functions to manage 'CRAN'-like repositories
     efficiently.
 License: GPL (>= 2)
-LazyData: true
 URL: https://github.com/r-hub/cranlike
 BugReports: https://github.com/r-hub/cranlike/issues
 Roxygen: list(markdown = TRUE)
