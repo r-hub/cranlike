@@ -9,7 +9,7 @@ License: GPL (>= 2)
 URL: https://github.com/r-hub/cranlike
 BugReports: https://github.com/r-hub/cranlike/issues
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 6.0.1.9000
+RoxygenNote: 7.1.2
 Imports: 
     DBI,
     debugme,

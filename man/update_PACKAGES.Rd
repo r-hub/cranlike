@@ -4,8 +4,12 @@
 \alias{update_PACKAGES}
 \title{Create or update PACKAGES* files for a CRAN-like repository}
 \usage{
-update_PACKAGES(dir = ".", fields = NULL, type = c("source", "mac.binary",
-  "win.binary"))
+update_PACKAGES(
+  dir = ".",
+  fields = NULL,
+  type = c("source", "mac.binary", "win.binary"),
+  xcolumns = NULL
+)
 }
 \arguments{
 \item{dir}{Character vector describing the location of the repository
@@ -37,9 +41,13 @@ update_PACKAGES(dir = ".", fields = NULL, type = c("source", "mac.binary",
     respectively) packages are supported.  Defaults to
     \code{"win.binary"} on Windows and to \code{"source"} otherwise.
   }
+
+\item{xcolumns}{Extra scalar columns to add to the database.
+Should be a named list of character scalars or \code{NULL} for no extra
+columns.}
 }
 \description{
-This function is similar to \code{\link[tools:write_PACKAGES]{tools::write_PACKAGES()}}, with some
+This function is similar to \code{\link[tools:writePACKAGES]{tools::write_PACKAGES()}}, with some
 differences:
 \itemize{
 \item It always uses the \code{MD5sum} field.
@@ -58,7 +66,8 @@ based on the existing PACKAGES* files. If no PACKAGES* files exist,
 either, then these will be created via \code{tools::write_PACKAGES()}.
 }
 \seealso{
-Other PACKAGES manipulation: \code{\link{add_PACKAGES}},
-  \code{\link{remove_PACKAGES}}
+Other PACKAGES manipulation: 
+\code{\link{add_PACKAGES}()},
+\code{\link{remove_PACKAGES}()}
 }
 \concept{PACKAGES manipulation}

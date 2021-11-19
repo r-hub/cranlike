@@ -17,7 +17,8 @@ The files will be first removed from the database, and then
 from the directory.
 }
 \seealso{
-Other PACKAGES manipulation: \code{\link{add_PACKAGES}},
-  \code{\link{update_PACKAGES}}
+Other PACKAGES manipulation: 
+\code{\link{add_PACKAGES}()},
+\code{\link{update_PACKAGES}()}
 }
 \concept{PACKAGES manipulation}

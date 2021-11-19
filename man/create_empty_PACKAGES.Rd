@@ -4,7 +4,7 @@
 \alias{create_empty_PACKAGES}
 \title{Create an empty package database}
 \usage{
-create_empty_PACKAGES(dir = ".", fields = NULL)
+create_empty_PACKAGES(dir = ".", fields = NULL, xcolumns = NULL)
 }
 \arguments{
 \item{dir}{Character vector describing the location of the repository
@@ -29,6 +29,10 @@ create_empty_PACKAGES(dir = ".", fields = NULL)
     and the path to the subdirectory in field \code{"Path"} if subdirectories
     are used.
   }
+
+\item{xcolumns}{Extra scalar columns to add to the database.
+Should be a named list of character scalars or \code{NULL} for no extra
+columns.}
 }
 \description{
 Create an empty package database if it does not exist.

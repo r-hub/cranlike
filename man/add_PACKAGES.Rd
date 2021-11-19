@@ -4,7 +4,7 @@
 \alias{add_PACKAGES}
 \title{Add R packages to the package database}
 \usage{
-add_PACKAGES(files, dir = ".", fields = NULL)
+add_PACKAGES(files, dir = ".", fields = NULL, xcolumns = NULL)
 }
 \arguments{
 \item{files}{Files to add, only the file names, without the path.
@@ -14,13 +14,18 @@ You can use \code{\link[base:basename]{base::basename()}} to chop off the path.}
 
 \item{fields}{Fields to use in the database if the database is
 created.}
+
+\item{xcolumns}{Extra scalar columns to add to the database.
+Should be a named list of character scalars or \code{NULL} for no extra
+columns.}
 }
 \description{
 The files must exist in the directory. If the package database does
 not exist, then it will be created.
 }
 \seealso{
-Other PACKAGES manipulation: \code{\link{remove_PACKAGES}},
-  \code{\link{update_PACKAGES}}
+Other PACKAGES manipulation: 
+\code{\link{remove_PACKAGES}()},
+\code{\link{update_PACKAGES}()}
 }
 \concept{PACKAGES manipulation}
