@@ -4,9 +4,9 @@
 > Tools for CRAN-like Repositories
 
 <!-- badges: start -->
-[![Project Status: Active - The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
-[![](http://www.r-pkg.org/badges/version/cranlike)](http://www.r-pkg.org/pkg/cranlike)
-[![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/cranlike)](http://www.r-pkg.org/pkg/cranlike)
+[![Project Status: Active - The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+[![](https://www.r-pkg.org/badges/version/cranlike)](https://www.r-pkg.org/pkg/cranlike)
+[![CRAN RStudio mirror downloads](https://cranlogs.r-pkg.org/badges/cranlike)](https://www.r-pkg.org/pkg/cranlike)
 [![R-CMD-check](https://github.com/r-hub/cranlike/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/r-hub/cranlike/actions/workflows/R-CMD-check.yaml)
 [![Codecov test coverage](https://codecov.io/gh/r-hub/cranlike/branch/main/graph/badge.svg)](https://app.codecov.io/gh/r-hub/cranlike?branch=main)
 <!-- badges: end -->
