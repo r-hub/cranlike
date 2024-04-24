@@ -36,7 +36,7 @@ update_PACKAGES(
   }
 
 \item{type}{
-    Type of packages: currently source \file{.tar.{gz,bz2,xz}} archives,
+    Type of packages: currently source \file{.tar.\{gz,bz2,xz\}} archives,
     and macOS or Windows binary (\file{.tgz} or \file{.zip},
     respectively) packages are supported.  Defaults to
     \code{"win.binary"} on Windows and to \code{"source"} otherwise.

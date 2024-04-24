@@ -2,8 +2,17 @@
 % Please edit documentation in R/cranlike.R
 \docType{package}
 \name{cranlike}
+\alias{cranlike-package}
 \alias{cranlike}
 \title{Tools for CRAN-like Repositories}
 \description{
 A set of functions to manage CRAN-like repositories efficiently.
+}
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/r-hub/cranlike}
+  \item Report bugs at \url{https://github.com/r-hub/cranlike/issues}
+}
+
 }

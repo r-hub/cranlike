@@ -3,9 +3,8 @@
 #'
 #' A set of functions to manage CRAN-like repositories efficiently.
 #'
-#' @docType package
 #' @name cranlike
-NULL
+"_PACKAGE"
 
 #' Create an empty package database
 #'
