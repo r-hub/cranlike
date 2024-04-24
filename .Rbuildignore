@@ -7,3 +7,4 @@
 ^src$
 ^revdep$
 ^\.github$
+^codecov\.yml$

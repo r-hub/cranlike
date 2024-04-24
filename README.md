@@ -5,10 +5,10 @@
 
 <!-- badges: start -->
 [![Project Status: Active - The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
-[![R build status](https://github.com/r-hub/cranlike/workflows/R-CMD-check/badge.svg)](https://github.com/r-hub/cranlike/actions)
 [![](http://www.r-pkg.org/badges/version/cranlike)](http://www.r-pkg.org/pkg/cranlike)
 [![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/cranlike)](http://www.r-pkg.org/pkg/cranlike)
-[![Coverage status](https://codecov.io/gh/r-hub/cranlike/branch/master/graph/badge.svg)](https://codecov.io/github/r-hub/cranlike?branch=master)
+[![R-CMD-check](https://github.com/r-hub/cranlike/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/r-hub/cranlike/actions/workflows/R-CMD-check.yaml)
+[![Codecov test coverage](https://codecov.io/gh/r-hub/cranlike/branch/main/graph/badge.svg)](https://app.codecov.io/gh/r-hub/cranlike?branch=main)
 <!-- badges: end -->
 
 A set of functions to manage CRAN-like repositories efficiently.
